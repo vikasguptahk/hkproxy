@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import "../addBlockedSites/add.css"
+import Navbar from '../navbar/Navbar';
 // import "../addBlockedSites/";
 import toast from 'react-hot-toast';
 
@@ -24,7 +25,7 @@ const Edit = () => {
  }
 
  useEffect(()=>{
-    axios.get(`http://localhost:3005/api/getone/${id}`)
+    axios.get(`http://localhost:3005/api/getOne/${id}`)
     .then((response)=>{
         setBlockedsite(response.data)
     })
@@ -39,7 +40,7 @@ const Edit = () => {
     try{
         const response= await axios.put(`http://localhost:3005/api/update/${id}`,blockedsite);
         toast.success(response.data.msg,{position:"top-right"});
-        navigate("/");
+        navigate("/blocked");
     }catch(error){
         console.log(error);
         toast.error("failed to update blocked site url",{position:"top-center"});
@@ -55,6 +56,8 @@ const Edit = () => {
  }
 
   return (
+    <div>
+        <Navbar/>
     <div className='addBlockedsite'>
         <Link to={"/blocked"}>Back</Link>
         <h3>Update Blockedsites</h3>
@@ -67,6 +70,7 @@ const Edit = () => {
                 <button type="submit">UPDATE Blocked site</button>
             </div>
         </form>
+    </div>
     </div>
   )
 }

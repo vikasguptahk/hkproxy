@@ -1,18 +1,34 @@
 .blockedsiteTable{
-    width: 60%;
+    text-align: left;
+    width: calc(100% - 20px);
     background-color: white;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);
     border-radius: 5px;
     margin: 50px auto;
     padding: 50px;
+    height: 100vh;
+}
+body{
+    overflow-x:hidden;
+    overflow-y:scroll;
+}
+.blockedsite_heading{
+    text-align: left;
 }
 
 .blockedsite_heading{
+
     padding-top:0%;
-    text-align: center;
+    text-align: left;
+}
+.leftAlignedLink {
+    text-align: left;
+    display: inline-block; /* Ensures link is aligned to the left */
+    width: 100%; /* Ensures link takes full width of parent element */
 }
 
 .addButton{
+
    padding-left: 10px;
    text-decoration: none;
    background-color: purple;
@@ -24,6 +40,7 @@
 }
 
 .blockedsiteTable table{
+    text-align: left;
     width: 100%;
     margin-top: 30px;
     border-collapse: collapse;
@@ -34,11 +51,13 @@
     background-color: darkblue;
     color: white;
     padding: 10px;
+    text-align: left;
 }
 
 .blockedsiteTable table tbody td{
     padding: 10px;
     text-align: left;
+
 }
 
 .actionButtons button{
@@ -48,6 +67,7 @@
     padding: 8px 10px;
     color: white;
     border-radius: 5px;
+    text-align: left;
     cursor:no-drop;
 }
 
@@ -55,7 +75,12 @@
     background: green;
     padding: 6px 10px;
     color: white;
+    text-align: left;
     border-radius: 5px;
     margin: 0 10px;
     text-decoration: none;
+}
+.blockedsiteTable table tbody td {
+    padding: 9px;
+    text-align: left;
 }

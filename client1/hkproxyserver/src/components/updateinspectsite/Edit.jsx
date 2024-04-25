@@ -4,6 +4,7 @@ import axios from "axios";
 import "../addInspectSites/addInspect.css"
 // import "../addBlockedSites/";
 import toast from 'react-hot-toast';
+import Navbar from '../navbar/Navbar';
 
 const Edit = () => {
 
@@ -24,7 +25,7 @@ const Edit = () => {
  }
 
  useEffect(()=>{
-    axios.get(`http://localhost:3005/api/inspect/getone/${id}`)
+    axios.get(`http://localhost:3005/api/inspect/getOne/${id}`)
     .then((response)=>{
         setInspectsite(response.data)
     })
@@ -37,9 +38,9 @@ const Edit = () => {
  const submitForm = async(e)=>{
     e.preventDefault();
     try{
-        const response= await axios.put(`http://localhost:3005/api/inspect/update/${id}`,blockedsite);
+        const response= await axios.put(`http://localhost:3005/api/inspect/update/${id}`,inspectsite);
         toast.success(response.data.msg,{position:"top-right"});
-        navigate("/");
+        navigate("/inspect");
     }catch(error){
         console.log(error);
         toast.error("failed to update inspect site url",{position:"top-center"});
@@ -47,9 +48,11 @@ const Edit = () => {
  }
 
   return (
+    <div>
+    <Navbar/>
     <div className='addBlockedsite'>
         <Link to={"/inspect"}>Back</Link>
-        <h3>Update Blockedsites</h3>
+        <h3>Update Inspect site </h3>
         <form className='addBlockedsiteForm' onSubmit={submitForm}>
             <div className="inputGroup">
                 <label htmlFor="url">url</label>
@@ -59,6 +62,7 @@ const Edit = () => {
                 <button type="submit">UPDATE Inspect site</button>
             </div>
         </form>
+    </div>
     </div>
   )
 }
