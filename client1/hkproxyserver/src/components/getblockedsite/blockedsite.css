@@ -7,6 +7,12 @@
     padding: 50px;
 }
 
+.blockedsiteTable table tbody td:first-child {
+    min-width: 10px;
+    padding: 8px;
+    text-align: left;
+}
+
 .blockedsite_heading{
     padding-top:0%;
     text-align: center;
@@ -15,7 +21,7 @@
 .addButton{
    padding-left: 10px;
    text-decoration: none;
-   background-color: purple;
+   background-color: rgb(201, 50, 13);
    color: white;
    font-weight: 500;
    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);

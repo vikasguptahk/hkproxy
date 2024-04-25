@@ -74,10 +74,13 @@ const Inspectsitedetails = () => {
 export default Inspectsitedetails
 
 */
+import Navbar from '../navbar/Navbar';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import "./inspectsitedetails.css"
 
 const Inspectsitedetails = () => {
   const { id } = useParams();
@@ -102,22 +105,50 @@ const Inspectsitedetails = () => {
   }
 
   return (
+    <div>
+      <Navbar/>
     <div className='blockedsiteTable'>
+      <Link to={'/inspect'}>Back</Link>
       <div className='blockedsite_heading'>
+      <Link to={"/inspect"} className='addButton' cellPadding="10px">Inspected Sites</Link>
+      <Link to={'/blocked'} className='addButton' cellPadding="10px">Blocked sites</Link>
+      <Link to={"/modified"} className='addButton' cellPadding="10px">Modified Site</Link>
         
-        Inspect site details
         <table border={1} cellPadding={10} cellSpacing={0}>
-          <thead>
-             <tr></tr>
-          </thead>
-          <tbody>
-            {Object.entries(inspectsites).map(([key,value])=>(
-            <tr key={key}>
-              <td>{JSON.stringify(value)}</td>
-            </tr>
-            ))}
-          </tbody>
+           
+        <tbody className='tablebody'>
+    {Object.entries(inspectsites).map(([key, value]) => {
+        if (key === 'responseStatusCode') {
+            return (
+                <tr key={key} className='leftAlignedLink'>
+                    <td><strong>{key}</strong></td>
+                    <td>{value}</td>
+                </tr>
+            );
+        } else {
+            const parts = JSON.stringify(value).slice(1, -1).split(',');
+            return (
+                <tr key={key} className='leftAlignedLink'>
+                    <td><strong>{key}</strong></td>
+                    <td>
+                        <table>
+                            <tbody>
+                                {parts.map((part, index) => (
+                                  
+                                    <tr key={`${key}-${index}`}>
+                                        <td>{part.trim().replace(/\\+/g, ' ')}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            );
+        }
+    })}
+</tbody>    
         </table>
+      </div>
       </div>
     </div>
   );

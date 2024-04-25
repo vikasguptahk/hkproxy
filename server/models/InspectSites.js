@@ -8,5 +8,6 @@ const InspectSiteSchema= new mongoose.Schema({
      }
 })
 
+
 const Inspectsite = mongoose.model("InspectSite",InspectSiteSchema)
 module.exports = Inspectsite

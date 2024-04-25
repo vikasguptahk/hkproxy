@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import "./add.css";
+import Navbar from '../navbar/Navbar';
 import toast from 'react-hot-toast';
 
 const Add = () => {
@@ -23,13 +24,15 @@ const Add = () => {
     await axios.post("http://localhost:3005/api/create", blockedsite)
     .then((response)=>{
        toast.success(response.data.msg, {position:"top-right"})
-       navigate("/")
+       navigate("/blocked")
     })
     .catch(error => console.log(error))
   }
 
 
   return (
+    <div>
+      <Navbar/>
     <div className='addBlockedsite'>
         <Link to={"/"}>Back</Link>
         <h3>Add new Blocking sites</h3>
@@ -43,6 +46,7 @@ const Add = () => {
                 <button type="submit">ADD Blocked site URl</button>
             </div>
         </form>
+    </div>
     </div>
   )
 }

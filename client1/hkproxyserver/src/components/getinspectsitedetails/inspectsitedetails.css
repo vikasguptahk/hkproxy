@@ -1,5 +1,46 @@
+.blockedsiteTable table tbody {
+    display: table-row-group; /* Use table-row-group to ensure tbody behaves like a block element */
+  }
+  
+  .blockedsiteTable table tbody td {
+    padding: 8px; /* Add padding for better readability */
+    text-align: left; /* Align content to the left */
+  }
+  
+  .blockedsiteTable table tbody td:first-child {
+    min-width: 150px; /* Set a minimum width for the first column */
+    padding: 8px; /* Add padding for better readability */
+    text-align: left; /* Align content to the left */
+  }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .blockedsiteTable{
-    width: 60%;
+    width:100%;
     background-color: white;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);
     border-radius: 5px;
@@ -24,7 +65,7 @@
 }
 
 .blockedsiteTable table{
-    width: 100%;
+    width:0%;
     margin-top: 30px;
     border-collapse: collapse;
 
@@ -37,10 +78,32 @@
 }
 
 .blockedsiteTable table tbody td{
-    padding: 10px;
+    padding: 0%;
     text-align: left;
 }
 
+.leftAlignedLink {
+    align-items: left;
+    text-align: left;
+    display:ruby-base;
+    
+     /* Ensures link is aligned to the left */
+    width: 100%; /* Ensures link takes full width of parent element */
+}
+
+.tablebody{
+    display:table-row;
+}
+
+
+.blockedsiteTable {
+    width: 100%;
+    background-color: white;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);
+    border-radius: 5px;
+    margin: 0px auto;
+    padding: 50px;
+}
 .actionButtons button{
     border: 0;
     outline: none;

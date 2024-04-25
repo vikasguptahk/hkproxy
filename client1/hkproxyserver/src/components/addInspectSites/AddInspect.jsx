@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import "./addInspect.css";
 import toast from 'react-hot-toast';
-
+import Navbar from '../navbar/Navbar';
 const AddInspect = () => {
   const inspectsites= {
     url:"",
@@ -28,6 +28,8 @@ const AddInspect = () => {
 
 
   return (
+    <div>
+      <Navbar/>
     <div className='addInspectsite'>
         <Link to={"/inspect"}>Back</Link>
         <h3>Add sites to inspect</h3>
@@ -41,6 +43,7 @@ const AddInspect = () => {
                 <button type="submit">ADD Inspect site URl</button>
             </div>
         </form>
+        </div>
     </div>
   )
 }

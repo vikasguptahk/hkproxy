@@ -2,12 +2,19 @@
 const mongoose = require('mongoose')
 
 const ModifiedSiteSchema= new mongoose.Schema({
-    url:String,
-    timestamp_req: {
-        type: Date,
-        default: Date.now
-    }
+    url:{
+        type:String,
+        required:true
+    },
+    jsonData: {
+        type:[{key:String,value:String}],
+        required:true
+    },
+    
 })
 
-const ModifiedSiteModel = mongoose.model("Users",ModifiedSiteSchema)
-module.exports = ModifiedSiteModel
+
+const Modifiedsite = mongoose.model("ModifiedSites",ModifiedSiteSchema)
+module.exports = Modifiedsite
+
+ 
