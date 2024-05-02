@@ -64,11 +64,11 @@ const Blockedsite = () => {
     <div>
       <Navbar/>
     <div className='blockedsiteTable'>
-        <div className='blockedsite_heading'>
+        <div className='blockedsite_heading1'>
             <h2>Blocked site table</h2>
         <Link to={"/add"} className='addButton'>Add Blockedsites</Link>
-        <Link to={"/inspect"} className='addButton' cellPadding="10px">Inspected Site</Link>
-        <Link to={"/modified"} className='addButton' cellPadding="10px">Modified Site</Link>
+        {/* <Link to={"/inspect"} className='addButton' cellPadding="10px">Inspected Site</Link>
+        <Link to={"/modified"} className='addButton' cellPadding="10px">Modified Site</Link> */}
         
         <table border={1} cellPadding={10} cellSpacing={0}>
             <thead>

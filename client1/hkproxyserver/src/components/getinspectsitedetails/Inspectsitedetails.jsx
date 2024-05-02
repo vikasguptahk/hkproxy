@@ -110,9 +110,9 @@ const Inspectsitedetails = () => {
     <div className='blockedsiteTable'>
       <Link to={'/inspect'}>Back</Link>
       <div className='blockedsite_heading'>
-      <Link to={"/inspect"} className='addButton' cellPadding="10px">Inspected Sites</Link>
+      {/* <Link to={"/inspect"} className='addButton' cellPadding="10px">Inspected Sites</Link>
       <Link to={'/blocked'} className='addButton' cellPadding="10px">Blocked sites</Link>
-      <Link to={"/modified"} className='addButton' cellPadding="10px">Modified Site</Link>
+      <Link to={"/modified"} className='addButton' cellPadding="10px">Modified Site</Link> */}
         
         <table border={1} cellPadding={10} cellSpacing={0}>
            

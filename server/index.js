@@ -1,9 +1,11 @@
 const express = require('express')
 const dotenv = require('dotenv')
+const inspectmRoutes = require("../server/routes/inspectmSiteRoute");
 const blockedRoutes = require("../server/routes/blockedSiteRoute");
 const inspectRoutes = require("../server/routes/inspectSiteRoute");
 const modifiedRoutes = require("../server/routes/modifiedSiteRoute");
 const productRoutes = require("../server/routes/productSiteRoute");
+const productmRoutes = require("../server/routes/productmSiteRoute");
 const mongoose = require('mongoose')
 const cors = require('cors') 
 dotenv.config();
@@ -27,7 +29,9 @@ let MONGOURL = process.env.MONGOURL;
 }).catch(error => console.log(error));
 
 
+app.use("/api/inspectm",inspectmRoutes);
 app.use("/api/inspect",inspectRoutes);
 app.use("/api", blockedRoutes);
 app.use("/api/modified",modifiedRoutes);
 app.use("/api/product",productRoutes);
+app.use("/api/productm",productmRoutes);

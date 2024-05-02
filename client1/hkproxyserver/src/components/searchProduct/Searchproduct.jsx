@@ -12,13 +12,16 @@ import { Dialog, DialogActions, DialogContentText, DialogTitle } from '@material
 
 import queryString from 'query-string';
 
+import TextField from '@mui/material/TextField';
+import { Autocomplete  } from '@mui/material';
+
 const Productsite = () => {
-    const location = useLocation();
-    const {asin} = queryString.parse(location.search);
+    //const location = useLocation();
+    //const {asin} = queryString.parse(location.search);
     const [deletingItemId, setDeletingItemId] = useState(null);
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
     const [productsites, setProductsites] = useState([]);
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = React.useState('')
     const [searchedProducts, setSearchedProducts] = useState([]);
 
     // useEffect(() => {
@@ -70,6 +73,15 @@ const Productsite = () => {
         deleteProductsite(deletingItemId);
         setConfirmDeleteOpen(false);
     };
+     
+    const top100Asins = [
+        {label: 'ALL',value:'ALL'},
+        {label: 'B09W5PSTBP', value:'B09W5PSTBP'},
+        {label: 'B097L4CKPJ', value:'B097L4CKPJ'},
+
+        {label: 'B0B4655BQ4', value:'B0B4655BQ4'},
+        {label: 'B095X1HR54', value:'B095X1HR54'},
+    ]
 
     const handleCancelDelete = () => {
         setDeletingItemId(null);
@@ -90,6 +102,9 @@ const Productsite = () => {
     const handleSearch = async(query)=>{
         const filteredProduct = productsites.filter(productsites => productsites.asin.includes(query));
         setSearchedProducts(filteredProduct);
+        if(query === 'ALL'){
+            setSearchedProducts(productsites);
+        }
     }
 
     // const handleSearch = () =>{
@@ -107,7 +122,16 @@ const Productsite = () => {
             <Navbar/>
         <div className="blockedsiteTable">
             <div className="blockedsite_heading">
-                <input type="text" placeholder='Enter ASIN value' value={query} onChange={(e) => setQuery(e.target.value)}/>
+                <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={top100Asins}
+                sx={{width:300}}
+                renderInput={(params)=><TextField{...params} label="Search By ASIN" /> }
+                value={query}
+                onChange={(e,value) => setQuery(value.value)}
+                />
+                {/* <input type="text" placeholder='Enter ASIN value' value={query} onChange={(e) => setQuery(e.target.value)}/> */}
                 {/* <Button onClick={()=>handleSearch(query)} className='searchButton'>Search</Button> */}
             </div>
             {searchedProducts.length > 0 && (
@@ -115,10 +139,10 @@ const Productsite = () => {
                     <thead>
                         <tr>
                             <th>S.No.</th>
-                            <th>Delete</th>
+                            {/* <th>Delete</th> */}
                             <th>Url</th>
                             <th>RequestTime</th>
-                            <th>ResponseTime</th>
+                            {/* <th>ResponseTime</th> */}
                             <th>Date</th>
                             <th>Status</th>
                         </tr>
@@ -127,10 +151,16 @@ const Productsite = () => {
                     {searchedProducts.map((productsite,index)=>(
                         <tr key={productsite._id}>
                             <td>{index +1}</td>
-                            <td className='actionButton'><Button onClick={() => setDeletingItemId(productsite._id)}><DeleteIcon/></Button></td>
-                            <td>{productsite.url}</td>
-                            <td>{new Date(productsite.timestamp_req*1000).toLocaleDateString()}</td>
-                            <td>{new Date(productsite.timestamp_res*1000).toLocaleString()}</td>
+                            {/* <td className='actionButton'><Button onClick={() => setDeletingItemId(productsite._id)}><DeleteIcon/></Button></td> */}
+                            <td align='left'>
+                                <Link to ={`/product/details/${productsite._id}` } className="leftAlignedLind"
+                                title={productsite.url.length>100?productsite.url.substring(0,100)+"...":productsite.url}>
+                                    {productsite.url.length>40?productsite.url.substring(0,40)+"...":productsite.url};
+                                </Link>
+                            </td>
+                            {/* <td>{productsite.url.length > 45 ? productsite.url.substring(0,45)+"...":productsite.url}</td> */}
+                            <td>{new Date(productsite.timestamp_req*1000).toLocaleString()}</td>
+                            <td>{new Date(productsite.timestamp_res*1000).toLocaleDateString()}</td>
                             <td>{productsite.response_code}</td>
                         </tr>
                     ))}

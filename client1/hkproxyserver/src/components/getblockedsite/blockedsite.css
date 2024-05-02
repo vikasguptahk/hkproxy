@@ -1,10 +1,11 @@
 .blockedsiteTable{
-    width: 60%;
+    width: 90%;
     background-color: white;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);
     border-radius: 5px;
     margin: 50px auto;
-    padding: 50px;
+    padding: 30px;
+    padding-right: 10px;
 }
 
 .blockedsiteTable table tbody td:first-child {
@@ -12,10 +13,15 @@
     padding: 8px;
     text-align: left;
 }
-
+.blockedsite_heading1{
+    padding-top:0%;
+    text-align: center;
+}
 .blockedsite_heading{
     padding-top:0%;
     text-align: center;
+    display: flex;
+    padding-left: 10px;
 }
 
 .addButton{

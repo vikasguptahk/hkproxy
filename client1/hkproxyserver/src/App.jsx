@@ -78,7 +78,8 @@ function App(){
     {
       path:"product/details/:id",
       element:<Productdetail/>
-    }
+    },
+    
    
   ])
   return(
