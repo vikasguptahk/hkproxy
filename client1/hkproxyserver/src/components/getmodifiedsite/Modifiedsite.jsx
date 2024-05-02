@@ -53,11 +53,11 @@ const Modifiedsite = () => {
     <div>
         <Navbar/>
     <div className='blockedsiteTable'>
-        <div className='blockedsite_heading'>
-            <h2>Modified site table</h2>
+        <div className='blockedsite_heading1'>
+            {/* <h2>Modified site table</h2> */}
         <Link to={"add"} className='addButton'>Add Modifiedsites</Link>
-        <Link to={"/inspect"} className='addButton' cellPadding="10px">Inspected Site</Link>
-        <Link to={"/blocked"} className='addButton' cellPadding="10px">Blocked site</Link>
+        {/* <Link to={"/inspect"} className='addButton' cellPadding="10px">Inspected Site</Link>
+        <Link to={"/blocked"} className='addButton' cellPadding="10px">Blocked site</Link> */}
         
         <table border={1} cellPadding={10} cellSpacing={0}>
             <thead>

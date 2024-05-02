@@ -5,13 +5,23 @@ const create = async(req,res)=>{
     try{
         const productsite = new Productsite(req.body)
         if(!productsite){
-            return res.status(404).json({msg:"Broduct site not found"});
+            return res.status(404).json({msg:"Product site not found"});
         }
         await productsite.save()
-        res.status(200).json({msg:"Broduct site added successfully"})
+        res.status(200).json({msg:"Product site added successfully"})
     }
     catch(error){
         res.status(500).json({error:error})
+    }
+}
+
+const getallasin = async(req,res) =>{
+    try{
+        const uniqueAsins = await Productsite.distinct('asin');
+        res.json(uniqueAsins);
+    } catch(err){
+        console.error(err);
+        res.status(500).json({msg:'Server Error'});
     }
 }
 
@@ -71,4 +81,4 @@ const deleteProductsite = async(req,res) =>{
     }
 }
 
-module.exports = { create, getAllProduct, getOne, updateProductsite, deleteProductsite};
+module.exports = { create,getallasin, getAllProduct, getOne, updateProductsite, deleteProductsite};

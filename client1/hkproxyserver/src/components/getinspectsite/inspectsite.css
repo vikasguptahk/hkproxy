@@ -1,6 +1,6 @@
 .blockedsiteTable{
     text-align: left;
-    width: calc(100% - 20px);
+    width: 100%;
     background-color: white;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);
     border-radius: 5px;
@@ -8,6 +8,7 @@
     padding: 50px;
     height: 100vh;
 }
+
 body{
     overflow-x:hidden;
     overflow-y:scroll;

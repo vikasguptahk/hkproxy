@@ -1,5 +1,5 @@
 .body{
-    
+    display:flex;
 } 
 .blockedsiteTable table tbody td {
     padding: 10px;
