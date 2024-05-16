@@ -1,4 +1,6 @@
- import {RouterProvider, createBrowserRouter} from "react-router-dom"
+ import {Navigate, RouterProvider, createBrowserRouter} from "react-router-dom"
+ import { Routes } from "react-router-dom"
+ import { Route } from "react-router-dom"
  
 import Url from './components/sites/Sites'
 import Blocked from './components/getblockedsite/Blockedsite'
@@ -16,11 +18,27 @@ import Product from "./components/getproductsite/Productsite"
  import Navbar from "./components/navbar/Navbar"
 import SearchProduct from "./components/searchProduct/Searchproduct"
 import Productdetail from "./components/getproductsitedetails/Productsitedetails"
+import SignIn from "./components/signIn/SignIn"
+import SignUp from "./components/signup/SignUp"
+import { useState } from "react"
+import ResponsiveAppBar from "./components/responsiveappbar/ ResponsiveAppBar"
+import { UserProvider } from "./UserContext"
+
+ 
+
 function App(){
   const route = createBrowserRouter([
+    // {
+    //   path:"/",
+    //   element:<Url/>
+    // },
+    
     {
-      path:"/",
-      element:<Url/>
+      path:"/signin",
+      element:<SignIn/>
+    },
+    {path:"/",
+      element:<SignUp/>
     },
     {
       path:"/blocked",
@@ -82,11 +100,40 @@ function App(){
     
    
   ])
+
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const handleLogin=()=>{
+    setIsLoggedIn(true);
+  }
+  const handleLogout=()=>{
+    setIsLoggedIn(false);
+  };
+
   return(
     <div className="App">
-       
+      <UserProvider>
       <RouterProvider router={route}></RouterProvider>
+      </UserProvider>
+      
     </div>
+    // <div className="App">
+    //   <RouterProvider router={route}>
+        
+    //       <ResponsiveAppBar isLoggedIn={isLoggedIn} onLogout={handleLogout}/>
+    //       <Routes>
+    //         <Route path="/" element={isLoggedIn?(<Navigate to ="/product"/>):(
+    //           <>
+    //           <SignIn onLogin={handleLogin}/>
+    //           <SignUp/>
+    //           </>
+    //         )}
+    //         />
+    //         <Route path="/product" element={isLoggedIn ? <Product/>:<Navigate to="/signin"/>}
+    //         />
+    //       </Routes>
+        
+    //   </RouterProvider>
+    // </div>
   );
 }
 

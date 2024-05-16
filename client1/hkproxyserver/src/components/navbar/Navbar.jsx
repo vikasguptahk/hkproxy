@@ -12,7 +12,7 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-container">
-            <Link to="/" className="title">HKproxyServer</Link>
+            HKproxyServer
             <div className="menu" onClick={toggleMenu}>
                 <span></span>
                 <span></span>
@@ -32,12 +32,12 @@ const Navbar = () => {
                 <li>
                     <NavLink to="/product">Products</NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink to="/product/searchproduct">Search_Product</NavLink>
                 </li>
                 <li>
                     <NavLink to="/" >Main Menu</NavLink>
-                </li>
+                </li> */}
             </ul>
         </nav>
     )

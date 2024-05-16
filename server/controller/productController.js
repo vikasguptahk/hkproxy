@@ -17,7 +17,7 @@ const create = async(req,res)=>{
 
 const getallasin = async(req,res) =>{
     try{
-        const uniqueAsins = await Productsite.distinct('asin');
+        const uniqueAsins = await Productsite.distinct('trackid',{"platform":"amazon"});
         res.json(uniqueAsins);
     } catch(err){
         console.error(err);
@@ -25,6 +25,101 @@ const getallasin = async(req,res) =>{
     }
 }
 
+// const getallUsers = async(req,res) =>{
+//     try{
+//         const uniqueUsers = await Productsite.distinct('trackid',{"platform":"meesho"});
+//         res.json(uniqueUsers);
+//     }
+//     catch(err){
+//         console.error(err);
+//         res.status(500).json({msg:'Server Error'});
+//     }
+// }
+
+const getallUsers = async(req,res) =>{
+    const {platform,trackid} = req.query;
+    try{
+        let users;
+        if(platform === 'ANY'){
+            console.log("all product are here");
+            if(trackid && trackid !== 'ALL'){
+                //const isTrackidString = await Productsite.findOne({}).where('trackid').regex(/^[0-9]+$/).exec() === null;
+                users = await Productsite.find({trackid})
+            }
+            else{
+                users = await Productsite.find();
+            }   
+        }
+        else{
+            if (trackid && trackid !== 'ALL') {
+                users = await Productsite.find({platform,trackid})
+                // console.log("trackid: " + trackid)
+                // let trackidValue = isNaN(trackid) ? trackid : Number(trackid);
+                // users = await Productsite.find({ platform, trackid: trackidValue });
+                // if (users !== null) {
+                //     console.log("user is not null")
+                    
+                //         users = await Productsite.find({ platform, trackid: trackidValue })
+                    
+                // } else {
+                //     console.log("no result");
+                // }
+            }
+            else if (platform) {
+                users = await Productsite.find({ platform });
+            }
+            else {
+                users = await Productsite.find();
+            }
+        //     if (trackid && trackid !== 'ALL') {
+        //     console.log("trackid: " + trackid)
+        //     let trackidValue = isNaN(trackid) ? trackid : Number(trackid);
+        //     users = await Productsite.find({ platform, trackid: trackidValue });
+        //     if (users !== null) {
+        //         console.log("user is not null")
+        //         if (platform === "amazon") {
+        //             users = await Productsite.find({ platform, trackid: trackidValue })
+        //         }
+        //     } else {
+        //         console.log("no result");
+        //     }
+        // }
+        // else if (platform) {
+        //     users = await Productsite.find({ platform });
+        // }
+        // else {
+        //     users = await Productsite.find();
+        // }
+        }
+        
+        res.status(200).json(users);
+        
+        
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({msg:'Server Error'});
+    }
+}
+
+ 
+const getallTrackid = async(req,res) =>{
+    const {platform} = req.query;
+    try{
+        if(platform === 'ANY'){
+            const trackids = await Productsite.distinct('trackid',{trackid:{$ne:null}});
+            res.status(200).json(trackids);
+        }
+        else{
+            const trackids = await Productsite.distinct('trackid',{platform,trackid:{$ne:null}})
+            res.status(200).json(trackids);
+        }
+        
+    }catch(error){
+        console.log(error);
+        res.status(500).json({Message:'Internal server error'})
+    }
+}
 const getAllProduct = async(req,res) =>{
     try{
         const productsite = await Productsite.find();
@@ -81,4 +176,4 @@ const deleteProductsite = async(req,res) =>{
     }
 }
 
-module.exports = { create,getallasin, getAllProduct, getOne, updateProductsite, deleteProductsite};
+module.exports = { getallTrackid,getallUsers,create,getallasin, getAllProduct, getOne, updateProductsite, deleteProductsite};
