@@ -4,10 +4,12 @@ import axios from "axios";
 import "./sites.css";
 import toast from 'react-hot-toast';
 import Navbar from "../navbar/Navbar"
+import ResponsiveAppBar from '../responsiveappbar/ ResponsiveAppBar';
 const Sitestable = () => {
   return (
     <div>
-      <Navbar/>
+      {/* <Navbar/> */}
+      <ResponsiveAppBar/>
     <div className='addBlockedsite'>
       
         <form className='addBlockedsiteForm' >

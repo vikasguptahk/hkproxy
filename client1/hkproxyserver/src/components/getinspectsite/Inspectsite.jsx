@@ -253,15 +253,17 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Link } from 'react-router-dom';
 import { Dialog, DialogActions, DialogContentText, DialogTitle } from '@material-ui/core';
 import ReactPaginate from 'react-paginate';
+import ResponsiveAppBar from '../responsiveappbar/ ResponsiveAppBar';
 
 const Inspectsite = () =>{
     const [deletingItemId, setDeletingItemId] = useState(null);
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false)
     const [inspectsites, setInspectsites] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
+    const ItemPerPage = 6;
 
     useEffect(()=>{
-        fetchData(1,6);
+        fetchData(pageNumber,ItemPerPage);
     },[]);
     const fetchData = async(pageNumber,pageSize) =>{
         const response = await axios.get(`http://localhost:3005/api/inspect/getall?page=${pageNumber}&pageSize=${pageSize}`);
@@ -287,14 +289,14 @@ const Inspectsite = () =>{
         })
     }
 
-    const pageCount = Math.ceil(inspectsites.length/6);
-    const pageVisited = pageNumber * 6;
+    const pageCount = Math.ceil(inspectsites.length/ItemPerPage);
+    const pageVisited = pageNumber * ItemPerPage;
 
     const displayItems = inspectsites
-                         .slice(pageVisited, pageVisited + 6)
+                         .slice(pageVisited, pageVisited + ItemPerPage)
                          .map((inspectsite, index) => (
                             <tr key={inspectsite._id}>
-                                <td>{index +1}</td>
+                                <td>{index +1+(pageNumber)*ItemPerPage}</td>
                                 <td className='actionButtons'>
                                     <Button onClick={()=> setDeletingItemId(inspectsite._id)} className="btn_red"><DeleteIcon/></Button>
                                 </td>
@@ -306,16 +308,20 @@ const Inspectsite = () =>{
                                         {inspectsite.url.length > 45 ? inspectsite.url.substring(0, 45) + '...':inspectsite.url}
                                     </Link>
                                 </td>
+                                <td>
+                                    {inspectsite.trackid}
+                                </td>
                             </tr>
                          ));
     const changePage  = ({selected}) => {
         const pageNumber = selected + 1;
-        fetchData(pageNumber,6);
+        fetchData(pageNumber,ItemPerPage);
         setPageNumber(selected);
     };
     return (
         <div>
-            <Navbar/>
+            {/* <Navbar/> */}
+            <ResponsiveAppBar />
             <div className="blockedsiteTable">
                 <Link to='/inspect/add' className='addButton'>Add Inspected Site</Link>
                 
@@ -327,6 +333,7 @@ const Inspectsite = () =>{
                         <th>Delete</th>
                         <th>Edit</th>
                         <th>Url</th>
+                        <th>Track_criteria</th>
                     </tr>
                 </thead>
                 <tbody>{displayItems}</tbody>

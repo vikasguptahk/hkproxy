@@ -9,6 +9,8 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Link } from 'react-router-dom'
 import { Dialog, DialogActions, DialogContentText, DialogTitle } from '@material-ui/core';
+import ResponsiveAppBar from '../responsiveappbar/ ResponsiveAppBar';
+import ReactPaginate from 'react-paginate';
 
 const Modifiedsite = () => {
 
@@ -17,16 +19,46 @@ const Modifiedsite = () => {
 
   const [modifiedsites, setModifiedsites] = useState([]);
 
-  useEffect(()=>{
+  const [pageNumber,setPageNumber] = useState(0);
+  const ItemPerPage = 8;
 
-    const fetchData = async()=>{
-        const response = await axios.get("http://localhost:3005/api/modified/getall");
+//   useEffect(()=>{
+
+//     const fetchData = async()=>{
+//         const response = await axios.get("http://localhost:3005/api/modified/getall");
+//         setModifiedsites(response.data);
+//     }
+
+//     fetchData();
+
+//   },[])
+
+    const fetchData = async(pageNumber,pageSize)=>{
+        const response = await axios.get(`http://localhost:3005/api/modified/getall?page=${pageNumber}&pageSize=${pageSize}`)
         setModifiedsites(response.data);
     }
 
-    fetchData();
+useEffect(()=>{
+    fetchData(pageNumber,ItemPerPage);
+},[pageNumber,ItemPerPage]);
 
-  },[])
+const changePage = ({selected})=>{
+    const pageNumber = selected +1;
+    fetchData(pageNumber,ItemPerPage);
+    setPageNumber(selected);
+}
+const pageCount = Math.ceil(modifiedsites.length/ItemPerPage);
+const pageVisited = pageNumber * ItemPerPage;
+const displayItems = modifiedsites.slice(pageVisited,pageVisited+ItemPerPage).map((modifiedsite,index)=>(
+    <tr key={modifiedsite._id}>
+        <td>{index+1}</td>
+        <td><Button onClick={()=> setDeletingItemId(modifiedsite._id)} > <DeleteIcon/ ></Button> </td>
+        {/* <td><EditIcon/></td>
+        <td>{modifiedsite.url}</td> */}
+        <td><Link to={`/modified/edit/${modifiedsite._id}`}> <EditIcon/></Link></td>
+        <td><Link to={`/modified/details/${modifiedsite._id}`}>{modifiedsite.url}</Link></td>
+    </tr>
+))
 
   const handleConfirmDelete =()=>{
     deleteModifiedsite(deletingItemId);
@@ -48,17 +80,13 @@ const Modifiedsite = () => {
       })
   }
   
-
   return (
-    <div>
-        <Navbar/>
+    <div >
+        <ResponsiveAppBar />
     <div className='blockedsiteTable'>
         <div className='blockedsite_heading1'>
-            {/* <h2>Modified site table</h2> */}
         <Link to={"add"} className='addButton'>Add Modifiedsites</Link>
-        {/* <Link to={"/inspect"} className='addButton' cellPadding="10px">Inspected Site</Link>
-        <Link to={"/blocked"} className='addButton' cellPadding="10px">Blocked site</Link> */}
-        
+         
         <table border={1} cellPadding={10} cellSpacing={0}>
             <thead>
                 <tr>
@@ -68,8 +96,8 @@ const Modifiedsite = () => {
                      <th>Url</th>
                 </tr>
             </thead>
-            <tbody>
-                {
+            <tbody>{displayItems}</tbody>
+                {/* {
                     modifiedsites.map((modifiedsite,index)=>{
                         return(
                         <tr key={modifiedsite._id}>
@@ -94,9 +122,17 @@ const Modifiedsite = () => {
                         )
                     })
                 }
-                
-            </tbody>
+                 */}
+            {/* </tbody> */}
         </table>
+        <ReactPaginate
+        previousLabel={'Previous'}
+        nextLabel={'Next'}
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={'pagination'}
+        activeClassName={'active'}
+        />
         <Dialog open={Boolean(deletingItemId)} onClick={handleCancelDelete}>
             <DialogTitle>Confirm Delete</DialogTitle>
             <DialogContentText>Are you sure?</DialogContentText>

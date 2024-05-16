@@ -1,4 +1,5 @@
 const Inspectsite = require('../models/InspectSites.js');
+const Productsite = require('../models/ProductSites.js');
 
 
 const create = async(req,res)=>{
@@ -12,6 +13,25 @@ const create = async(req,res)=>{
     }
     catch(error){
         res.status(500).json({error:error})
+    }
+}
+
+const getallPlatform = async(req,res) => {
+    try{
+        const platforms = await Inspectsite.distinct('url');
+        const cleanedplatform = platforms.map(platform => {
+            const match = platform.match(/www\.(.*?)\./);
+            if(match && match.length > 1){
+                return match[1];
+            } else{
+                return platform;
+            }
+        });
+        res.json(cleanedplatform);
+
+    } catch(err){
+        console.error(err);
+        res.status(500).json({message:'Internal Server Error'});
     }
 }
 
@@ -71,4 +91,5 @@ const deleteInspectedSite = async(req,res) =>{
     }
 }
 
-module.exports = { create, getAll, getOne, updateInspectsite, deleteInspectedSite};
+module.exports = { getallPlatform, create, getAll, getOne, updateInspectsite, deleteInspectedSite};
+

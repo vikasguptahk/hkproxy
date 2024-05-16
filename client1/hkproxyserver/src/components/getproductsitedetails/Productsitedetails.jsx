@@ -91,55 +91,58 @@ import toast from 'react-hot-toast';
 import Navbar from '../navbar/Navbar';
 import {Link} from 'react-router-dom';
 import "./productsitedetails.css"
+import ResponsiveAppBar from '../responsiveappbar/ ResponsiveAppBar';
 
 const Productsitedetails = () => {
   const { id } = useParams();
-  const location = useLocation();
-  const selectedPlatform = new URLSearchParams(location.search).get('selectedPlatform');
-  const meeshoUrl = new URLSearchParams(location.search).get('meeshoUrl');
+  // const location = useLocation();
+ // const selectedPlatform = new URLSearchParams(location.search).get('selectedPlatform');
+  //const meeshoUrl = new URLSearchParams(location.search).get('meeshoUrl');
   const [productsites, setProductsitesdetail] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(selectedPlatform)
         console.log("fetching the data")
-        let response;
-        if (selectedPlatform === 'meesho') {
-          console.log("fetching the meesho")
-          response = await axios.get(`http://localhost:3005/api/productm/getOne/${id}`);
-        } else if (selectedPlatform === 'amazon') {
-          response = await axios.get(`http://localhost:3005/api/product/getOne/${id}`);
-        }
+        // let response;
+        // if (selectedPlatform === 'meesho') {
+        //   console.log("fetching the meesho")
+        //   response = await axios.get(`http://localhost:3005/api/productm/getOne/${id}`);
+        // } else if (selectedPlatform === 'amazon') {
+        //   response = await axios.get(`http://localhost:3005/api/product/getOne/${id}`);
+        // }
+        const response = await axios.get(`http://localhost:3005/api/product/getOne/${id}`)
         setProductsitesdetail(response.data);
       } catch (error) {
         console.error('Error fetching data: ', error);
-       // toast.error('Error fetching data', { position: 'top-right' });
+        toast.error('Error fetching data', { position: 'top-right' });
       }
     };
 
     fetchData();
-  }, [id, selectedPlatform]);
+  }, [id
+  //, selectedPlatform
+]);
 
 
-  useEffect(() => {
-    const fetchmeeshourl = async () => {
-      try{
-        console.log(meeshoUrl);
-        let response1;
-        if(meeshoUrl === 'meeshoUrl'){
-          response1 = await axios.get(`http://localhost:3005/api/productm/getall/urls`);
-          setProductsitesdetail(response1.data);
-        }
+  // useEffect(() => {
+  //   const fetchmeeshourl = async () => {
+  //     try{
+  //       console.log(meeshoUrl);
+  //       let response1;
+  //       if(meeshoUrl === 'meeshoUrl'){
+  //         response1 = await axios.get(`http://localhost:3005/api/productm/getall/urls`);
+  //         setProductsitesdetail(response1.data);
+  //       }
 
-      }
-      catch(error){
-        console.error('Error fetching data: ', error);
-        toast.error('Error in fetching data',{position: 'top-right'});
-      }
-    }
-    fetchmeeshourl();
-  },[]);
+  //     }
+  //     catch(error){
+  //       console.error('Error fetching data: ', error);
+  //       toast.error('Error in fetching data',{position: 'top-right'});
+  //     }
+  //   }
+  //   fetchmeeshourl();
+  // },[]);
 
   if (!productsites) {
         return <div>Loading ...........</div>;
@@ -147,7 +150,8 @@ const Productsitedetails = () => {
      
       return (
         <div>
-          <Navbar/>
+          <ResponsiveAppBar/>
+          {/* <Navbar/> */}
         <div className='blockedsiteTable'>
           <Link to={'/product'}>Back</Link>
           <div className='blockedsite_heading'>
